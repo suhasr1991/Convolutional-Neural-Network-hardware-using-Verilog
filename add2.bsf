@@ -1,0 +1,77 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+*/
+(header "symbol" (version "1.2"))
+(symbol
+	(rect 0 0 160 128)
+	(text "add2" (rect 67 0 100 16)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 112 25 124)(font "Arial" ))
+	(port
+		(pt 0 40)
+		(input)
+		(text "dataa[6..0]" (rect 0 0 60 14)(font "Arial" (font_size 8)))
+		(text "dataa[6..0]" (rect 4 26 53 39)(font "Arial" (font_size 8)))
+		(line (pt 0 40)(pt 64 40)(line_width 3))
+	)
+	(port
+		(pt 0 72)
+		(input)
+		(text "datab[6..0]" (rect 0 0 60 14)(font "Arial" (font_size 8)))
+		(text "datab[6..0]" (rect 4 58 53 71)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 64 72)(line_width 3))
+	)
+	(port
+		(pt 160 56)
+		(output)
+		(text "result[6..0]" (rect 0 0 60 14)(font "Arial" (font_size 8)))
+		(text "result[6..0]" (rect 106 42 155 55)(font "Arial" (font_size 8)))
+		(line (pt 160 56)(pt 96 56)(line_width 3))
+	)
+	(port
+		(pt 160 96)
+		(output)
+		(text "overflow" (rect 0 0 51 14)(font "Arial" (font_size 8)))
+		(text "overflow" (rect 113 82 155 95)(font "Arial" (font_size 8)))
+		(line (pt 160 96)(pt 86 96))
+	)
+	(port
+		(pt 160 112)
+		(output)
+		(text "cout" (rect 0 0 24 14)(font "Arial" (font_size 8)))
+		(text "cout" (rect 136 98 155 111)(font "Arial" (font_size 8)))
+		(line (pt 160 112)(pt 75 112))
+	)
+	(drawing
+		(text "A+B" (rect 75 51 169 115)(font "Arial" (font_size 8)))
+		(text "A" (rect 64 35 134 83)(font "Arial" (font_size 8)))
+		(text "B" (rect 65 67 135 147)(font "Arial" (font_size 8)))
+		(line (pt 64 32)(pt 64 80))
+		(line (pt 64 32)(pt 96 40))
+		(line (pt 64 80)(pt 96 72))
+		(line (pt 96 40)(pt 96 72))
+		(line (pt 74 80)(pt 74 96))
+		(line (pt 85 75)(pt 85 96))
+		(line (pt 74 96)(pt 74 112))
+		(line (pt 0 0)(pt 162 0))
+		(line (pt 162 0)(pt 162 130))
+		(line (pt 0 130)(pt 162 130))
+		(line (pt 0 0)(pt 0 130))
+	)
+)

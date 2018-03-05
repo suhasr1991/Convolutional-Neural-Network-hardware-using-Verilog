@@ -1,0 +1,118 @@
+`timescale 1 ps / 1 ps
+module top;
+    // Inputs
+    
+    reg  clk,rst,enable;
+	 
+    // Outputs
+    wire [6:0]y;
+	 wire res_flag;
+	 //main(clk,rst,enable,y,res_flag);
+    main m1(
+        .clk(clk),
+	     .rst(rst),
+	     .enable(enable),
+        .y(y),
+		  .res_flag(res_flag)
+    );
+    
+	 always begin
+        	#10 clk = ~clk;
+    end
+    
+
+    initial begin
+			clk = 0;
+			enable=0;
+			rst=1;
+			#40;
+			rst=0;
+			#10;
+			enable = 1;
+			#10;
+			//enable=0;
+			#10;
+			enable=1;
+			#120;
+			//enable=0;
+			#10;
+			enable=1;
+			#70000 $finish;	
+    end
+	 
+    initial begin
+                $dumpfile("feed_nn.vcd");
+                $dumpvars(0,top);
+    end
+      
+endmodule
+
+//`timescale 1 ps / 1 ps
+//module top(clk,rst,enable,y,res_flag);
+//   input clk,rst;
+//	input enable;
+//	output [6:0]y;
+//	output reg res_flag;
+//	
+//	reg  [12:0]address,address_d;
+//	wire [6:0]RAM_X_op,RAM_T1_op,RAM_T2_op;
+//	wire [13:0] XT1;
+//	reg  [13:0]L1;
+//	wire [6:0] L1_op;
+//	
+//	assign L1_op = L1[10:4];
+//	
+//	Ram_x x_ram_inst(
+//	.address(address_d),
+//	.clock(clk),
+//	.data(7'h00),
+//	.wren(1'b0),
+//	.q(RAM_X_op));
+//	
+//	RAM_t1 t1_ram_inst(
+//	.address(address_d),
+//	.clock(clk),
+//	.data(7'h00),
+//	.wren(1'b0),
+//	.q(RAM_T1_op));
+//	
+//	Ram_t2 t2_ram_inst(
+//	.address(address_d),
+//	.clock(clk),
+//	.data(7'h00),
+//	.wren(1'b0),
+//	.q(RAM_T2_op));
+//	
+//	mult1 m1(
+//	.dataa(RAM_X_op),
+//	.datab(RAM_T1_op),
+//	.result(XT1));
+//	
+//	always @(*) begin
+//		//address = address_d;
+//		//if(enable) begin
+//			address = address_d + 8'h01;
+//		//end
+//	end
+//	
+//	always @(XT1) begin
+//		
+//		if (XT1[3]) begin
+//			L1 = {XT1[13:3] + 11'b000_0000_0001,XT1[2:0]};
+//		end else begin
+//			L1 = XT1;
+//		end
+//	end
+//	
+//	
+//	always @(posedge clk)begin
+//		if(rst) begin
+//			address_d <=  13'd0;
+//		end else begin
+//			address_d <=  address;
+//		end
+//	end
+//	
+//endmodule
+
+

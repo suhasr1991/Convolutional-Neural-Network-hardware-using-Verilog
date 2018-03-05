@@ -1,0 +1,100 @@
+module main(clk,rst,enable,y,res_flag);
+   input clk,rst;
+	input enable;
+	output reg [6:0]y;
+	output reg res_flag;
+	
+	reg  [8:0] count,count_d;
+	reg  [8:0] addr_count1,addr_count_d1;
+	reg  [12:0]address,address_d;
+	wire [6:0]RAM_X_op,RAM_T1_op,RAM_T2_op;
+	wire [13:0] XT1;
+	reg  [13:0]L1;
+	wire [6:0] L1_op,y_1;
+	reg [6:0] y_d;
+	assign L1_op = L1[10:4];
+	
+	Ram_x x_ram_inst(
+	.address(address_d),
+	.clock(clk),
+	.data(7'h00),
+	.wren(1'b0),
+	.q(RAM_X_op));
+	
+	ram_t1_proj t1_read(
+	.address(address_d),
+	.clock(clk),
+	.data(7'h00),
+	.wren(1'b0),
+	.q(RAM_T1_op));
+	
+	Ram_t2 t2_ram_inst(
+	.address(address_d),
+	.clock(clk),
+	.data(7'h00),
+	.wren(1'b0),
+	.q(RAM_T2_op));
+	
+	mult1 m1(
+	.dataa(RAM_X_op),
+	.datab(RAM_T1_op),
+	.result(XT1));
+	
+	add1 a1(
+	.dataa(L1_op),
+	.datab(y_d),
+	.cout(carry_out1),
+	.overflow(of1),
+	.result(y_1));
+	
+	always @(*) begin
+		address = address_d;
+			
+		if(enable) begin
+			address = address_d + 8'h01;
+		end
+	end
+	
+	always @(address_d) begin
+		res_flag = 0;
+		y        = 0;
+		count   = count_d + 9'd1;
+		addr_count1  = addr_count_d1 + 9'd1; 
+		if(addr_count_d1 == 9'd403) begin
+				res_flag = 1;
+				y        = y_d;
+				addr_count1   = 9'd1;	
+				$display("y=%b",y);
+		end
+		
+		if (count_d==9'd401) begin
+			count = 9'd1;
+		end
+	end
+	
+	always @(XT1) begin
+		//rounding logic
+		if (XT1[3]) begin
+			//L1 = {XT1[13:3] + 11'b000_0000_0001,XT1[2:0]};
+			L1 = XT1;
+		end else begin
+			L1 = XT1;
+		end
+		
+	end
+	
+	always @(posedge clk)begin
+		if(rst) begin
+			address_d <=  13'd0;
+			y_d       <=  7'd0;
+			count_d   <=  9'd0;
+			addr_count_d1   <=  9'd0;
+		end else begin
+			address_d <=  address;
+			y_d       <=  y_1;
+			count_d   <=  count;
+			addr_count_d1   <=  addr_count1;
+		end
+	end
+	
+endmodule
